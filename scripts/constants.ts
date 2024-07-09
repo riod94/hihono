@@ -4,6 +4,14 @@ interface MakeCommandInterface { name: string; description: string; }
 
 const makeCommands: MakeCommandInterface[] = [
     {
+        name: 'cache:clear',
+        description: 'Clear application cache',
+    },
+    {
+        name: 'key:generate',
+        description: 'Set the application key',
+    },
+    {
         name: 'make:controller',
         description: 'Create a new controller class',
     },
@@ -23,13 +31,15 @@ const makeCommands: MakeCommandInterface[] = [
         name: 'make:resource',
         description: 'Create a new resource',
     },
-    // {
-    //     name: 'make:test',
-    //     description: 'Create a new test class',
-    // },
+    {
+        name: 'make:test',
+        description: 'Create a new test class',
+    },
 ];
 
 const Templates: TemplateInterface = {
+    // generate encryption key and save to .env as APP_KEY
+    key: (key: string) => `APP_KEY=${key}`,
     controller: (name: string) => `import { Context } from "hono"
 
 export default class ${name} {
@@ -162,10 +172,22 @@ export default class ${name} extends BaseResource {
             //
         }
     }
-}`
+}`,
+    test: (name: string, type?: string) => `import { describe, expect, test } from 'bun:test'
+
+describe('${name}${type ? `_${type}` : ''}', () => {
+    test("add", () => {
+        expect(2 + 2).toEqual(4);
+    });
+
+    test("multiply", () => {
+        expect(2 * 2).toEqual(4);
+    });
+});`,
 }
 
 const dirname: ObjectStringInterface = {
+    key: 'key',
     controller: 'Controllers',
     middleware: 'Middleware',
     model: 'Models',

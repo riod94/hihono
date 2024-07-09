@@ -1,11 +1,14 @@
 {
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
-    "compile": "bun build --compile --minify --sourcemap ./src/index.ts --outfile",
+    "dev": "bun shin cache:clear && bun run --hot src/index.ts",
+    "compile": "bun shin cache:clear && bun build --compile --minify --sourcemap ./src/index.ts --outfile",
     "shin": "bun scripts/index.ts"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.11.2",
     "@vinejs/vine": "^2.1.0",
+    "better-sqlite3": "^11.1.1",
+    "firebase": "^10.12.2",
     "fs": "^0.0.1-security",
     "hono": "^4.4.7",
     "hono-rate-limiter": "^0.3.0",
