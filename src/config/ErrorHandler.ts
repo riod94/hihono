@@ -1,8 +1,8 @@
 import { errors } from "@vinejs/vine";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
-import { t } from "../lang";
 import validationRules from "../lang/validation";
+import { __ } from "../lang";
 
 const ErrorHandler = (err: any, c: Context) => {
     const localization = c.req.header('x-localization') || 'en';
@@ -47,7 +47,7 @@ const ErrorHandler = (err: any, c: Context) => {
                 }
             }
 
-            const message = t(msgValRule, params, localization);
+            const message = __(msgValRule, params, localization);
 
             return {
                 field,
@@ -56,7 +56,7 @@ const ErrorHandler = (err: any, c: Context) => {
             }
         })
         // Handle validation errors
-        return c.json({ message: t('The given data was invalid', {}, localization), errors: parseErrors }, 422);
+        return c.json({ message: __('The given data was invalid', {}, localization), errors: parseErrors }, 422);
     }
 
     console.error('Error handler', err)

@@ -6,7 +6,9 @@ interface get {
     username: string
     email: string
 }
-interface post { }
+interface post {
+    file: File
+}
 
 export default class UserRequest extends BaseRequest {
     // Add validation rules
@@ -16,7 +18,7 @@ export default class UserRequest extends BaseRequest {
             email: vine.string().email()
         }),
         post: vine.object({
-            // Post validation rules
+            file: vine.any()
         }),
     }
 

@@ -1,0 +1,33 @@
+{
+    "drivers": {
+        "newclon6634491c805dd": {
+            "tenant": "newclon6634491c805dd",
+            "driver": "gcp",
+            "credentials": {
+                "project_id": "",
+                "private_key": "",
+                "client_id": "",
+                "client_email": "",
+                "storage_bucket": ""
+            }
+        },
+        "newclon6634491c805ddxx": {
+            "tenant": "newclon6634491c805dd",
+            "driver": "firebase",
+            "credentials": {
+                "project_id": "",
+                "api_key": "",
+                "app_id": "",
+                "storage_bucket": ""
+            }
+        },
+        "nwclone6634491c8234f": {
+            "tenant": "nwclone6634491c8234f",
+            "driver": "local",
+            "credentials": {
+                "root": "./src/storage",
+                "visibility": "public"
+            }
+        }
+    }
+}

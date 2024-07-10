@@ -2,7 +2,7 @@ import { verify } from "hono/jwt";
 import { existsSync, readFileSync } from "fs";
 import { createMiddleware } from "hono/factory"
 import { JwtAlgorithmNotImplemented, JwtHeaderInvalid, JWTPayload, JwtTokenExpired, JwtTokenInvalid, JwtTokenIssuedAt, JwtTokenNotBefore, JwtTokenSignatureMismatched } from "hono/utils/jwt/types";
-import { t } from "../../lang";
+import { __ } from "../../lang";
 
 interface JwtVerifyInterface extends JWTPayload {
     uid: number;
@@ -21,11 +21,11 @@ export default function AuthMiddleware() {
             const bearerToken = authHeader?.split('Bearer ')[1];
 
             if (!bearerToken) {
-                return c.json({ message: t('Unauthorized') }, 401);
+                return c.json({ message: __('Unauthorized') }, 401);
             }
 
             if (existsSync(keyPath) === false) {
-                return c.json({ message: t('Error: Private key not found') }, 500);
+                return c.json({ message: __('Error: Private key not found') }, 500);
             }
 
             const privateKey = readFileSync('./src/storage/oauth-private.key')
@@ -45,29 +45,29 @@ export default function AuthMiddleware() {
         } catch (error) {
             // handle JWT errors
             if (error instanceof JwtAlgorithmNotImplemented) {
-                return c.json({ message: t('Unauthorized: Algorithm not implemented') }, 401);
+                return c.json({ message: __('Unauthorized: Algorithm not implemented') }, 401);
             }
             if (error instanceof JwtTokenInvalid) {
-                return c.json({ message: t('Unauthorized: Invalid token') }, 401);
+                return c.json({ message: __('Unauthorized: Invalid token') }, 401);
             }
             if (error instanceof JwtTokenNotBefore) {
-                return c.json({ message: t('Unauthorized: Token not yet valid') }, 401);
+                return c.json({ message: __('Unauthorized: Token not yet valid') }, 401);
             }
             if (error instanceof JwtTokenExpired) {
-                return c.json({ message: t('Unauthorized: Token expired') }, 401);
+                return c.json({ message: __('Unauthorized: Token expired') }, 401);
             }
             if (error instanceof JwtTokenIssuedAt) {
-                return c.json({ message: t('Unauthorized: Token issued in the future') }, 401);
+                return c.json({ message: __('Unauthorized: Token issued in the future') }, 401);
             }
             if (error instanceof JwtHeaderInvalid) {
-                return c.json({ message: t('Unauthorized: Invalid header') }, 401);
+                return c.json({ message: __('Unauthorized: Invalid header') }, 401);
             }
             if (error instanceof JwtTokenSignatureMismatched) {
-                return c.json({ message: t('Unauthorized: Token signature mismatched') }, 401);
+                return c.json({ message: __('Unauthorized: Token signature mismatched') }, 401);
             }
 
             console.error('Authentication error', error);
-            return c.json({ message: t('Internal server error') }, 500);
+            return c.json({ message: __('Internal server error') }, 500);
         }
     })
 }
